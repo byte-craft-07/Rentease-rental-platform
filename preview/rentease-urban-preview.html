@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RentEase Preview | Urban Premium Minimal</title>
+    <style>
+      :root {
+        --bg: #f7f8fa;
+        --surface: #ffffff;
+        --surface-2: #f0fdfa;
+        --text: #111827;
+        --muted: #64748b;
+        --line: #e5e7eb;
+        --accent: #0f766e;
+        --accent-2: #14b8a6;
+        --warm: #c98b5f;
+        --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 26px 20px;
+        background: #ffffff;
+        border-right: 1px solid var(--line);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 850;
+        letter-spacing: 0;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 12px 28px rgba(15, 118, 110, 0.26);
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+        margin-top: 34px;
+      }
+
+      .nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 42px;
+        padding: 0 12px;
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 0.94rem;
+        font-weight: 700;
+      }
+
+      .nav a.active {
+        background: var(--surface-2);
+        color: var(--accent);
+      }
+
+      .side-card {
+        margin-top: 34px;
+        padding: 16px;
+        border-radius: 16px;
+        background: #fff8f2;
+        border: 1px solid #f0ddcc;
+      }
+
+      .side-card strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .side-card p {
+        margin: 0;
+        color: #7c5b42;
+        font-size: 0.88rem;
+        line-height: 1.5;
+      }
+
+      .main {
+        min-width: 0;
+        padding: 24px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+
+      .search {
+        flex: 1;
+        max-width: 560px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 48px;
+        padding: 0 16px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: white;
+      }
+
+      .search input {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        color: var(--text);
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .icon-btn,
+      .primary-btn {
+        border: 0;
+        cursor: pointer;
+      }
+
+      .icon-btn {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: white;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      .primary-btn {
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 14px;
+        background: var(--accent);
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 12px 26px rgba(15, 118, 110, 0.2);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+        gap: 20px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-panel {
+        position: relative;
+        min-height: 340px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .hero-copy {
+        padding: 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        text-wrap: balance;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 560px;
+        font-size: 3.35rem;
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .hero-copy > p:not(.eyebrow) {
+        max-width: 520px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--text);
+        font-weight: 800;
+      }
+
+      .hero-visual {
+        min-height: 100%;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(17, 24, 39, 0.1)),
+          url("https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=80");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .checkout-panel {
+        padding: 22px;
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .panel-head h2 {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .cart-item {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 12px;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .thumb {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        object-fit: cover;
+        background: #eef2f7;
+      }
+
+      .cart-item h3 {
+        margin: 0;
+        font-size: 0.98rem;
+      }
+
+      .cart-item p,
+      .schedule p,
+      .metric p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .schedule {
+        margin-top: 18px;
+        padding: 14px;
+        border-radius: 16px;
+        background: #f8fafc;
+      }
+
+      .schedule strong {
+        display: block;
+      }
+
+      .checkout-total {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .checkout-total span {
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .checkout-total strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 1.8rem;
+      }
+
+      .section {
+        margin-top: 24px;
+      }
+
+      .section-title {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 14px;
+      }
+
+      .section-title h2 {
+        margin: 0;
+        font-size: 1.55rem;
+      }
+
+      .section-title p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .chips {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .chip {
+        flex: 0 0 auto;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: white;
+        min-height: 36px;
+        padding: 0 14px;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .chip.active {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: white;
+      }
+
+      .products {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .product-card {
+        overflow: hidden;
+      }
+
+      .product-card img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        display: block;
+      }
+
+      .product-body {
+        padding: 16px;
+      }
+
+      .product-body h3 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .product-body p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .price-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .price-line strong {
+        font-size: 1.1rem;
+      }
+
+      .deposit {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .tenure {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      .tenure span {
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+
+      .lower-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .rental-list,
+      .admin-grid {
+        padding: 20px;
+      }
+
+      .rental-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .rental-row:last-child {
+        border-bottom: 0;
+      }
+
+      .rental-row h3 {
+        margin: 0;
+        font-size: 0.98rem;
+      }
+
+      .rental-row p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .status {
+        min-width: 86px;
+        text-align: center;
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--accent);
+        background: var(--surface-2);
+        font-size: 0.78rem;
+        font-weight: 850;
+      }
+
+      .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .metric {
+        padding: 16px;
+        border-radius: 16px;
+        background: #f8fafc;
+      }
+
+      .metric strong {
+        display: block;
+        color: var(--text);
+        font-size: 1.7rem;
+      }
+
+      .metric.warm {
+        background: #fff8f2;
+      }
+
+      .metric.warm strong {
+        color: var(--warm);
+      }
+
+      @media (max-width: 1120px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .nav {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          margin-top: 20px;
+        }
+
+        .side-card {
+          display: none;
+        }
+
+        .hero-grid,
+        .lower-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .products {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 680px) {
+        .main {
+          padding: 16px;
+        }
+
+        .topbar,
+        .section-title {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .top-actions {
+          justify-content: space-between;
+        }
+
+        .hero-panel {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-copy {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 2.25rem;
+        }
+
+        .hero-visual {
+          min-height: 220px;
+          order: -1;
+        }
+
+        .products,
+        .admin-grid,
+        .nav {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#">
+          <span class="brand-mark">R</span>
+          <span>RentEase</span>
+        </a>
+        <nav class="nav" aria-label="Preview navigation">
+          <a class="active" href="#">Browse</a>
+          <a href="#">Cart</a>
+          <a href="#">My Rentals</a>
+          <a href="#">Admin</a>
+        </nav>
+        <div class="side-card">
+          <strong>Urban Premium Minimal</strong>
+          <p>Clean rental marketplace UI with warm service cues for trust, delivery, and maintenance.</p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <label class="search">
+            <span aria-hidden="true">Search</span>
+            <input aria-label="Search rentals" value="Sofa, fridge, washing machine" />
+          </label>
+          <div class="top-actions">
+            <button class="icon-btn" type="button" aria-label="Notifications">3</button>
+            <button class="primary-btn" type="button">Checkout</button>
+          </div>
+        </header>
+
+        <section class="hero-grid" aria-label="RentEase preview">
+          <div class="panel hero-panel">
+            <div class="hero-copy">
+              <p class="eyebrow">Furniture & appliance rentals</p>
+              <h1>Rent smarter, move lighter.</h1>
+              <p>
+                Choose monthly furniture and appliance plans with flexible tenure, scheduled delivery,
+                easy returns, and maintenance support built in.
+              </p>
+              <div class="hero-cta">
+                <a class="primary-btn" href="#">Browse Rentals</a>
+                <a class="secondary-btn" href="#">How it works</a>
+              </div>
+            </div>
+            <div class="hero-visual" role="img" aria-label="Modern rented living room setup"></div>
+          </div>
+
+          <aside class="panel checkout-panel" aria-label="Cart preview">
+            <div class="panel-head">
+              <h2>Cart</h2>
+              <span class="pill">3 items</span>
+            </div>
+            <div class="cart-item">
+              <img class="thumb" src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=format&fit=crop&w=200&q=80" alt="Sofa" />
+              <div>
+                <h3>Compact Sofa</h3>
+                <p>Rs 1,499 / month</p>
+              </div>
+            </div>
+            <div class="cart-item">
+              <img class="thumb" src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=200&q=80" alt="Refrigerator" />
+              <div>
+                <h3>Double Door Fridge</h3>
+                <p>Rs 1,299 / month</p>
+              </div>
+            </div>
+            <div class="schedule">
+              <strong>Delivery scheduled</strong>
+              <p>15 Jun, Bengaluru, evening slot</p>
+            </div>
+            <div class="checkout-total">
+              <div>
+                <span>Monthly total</span>
+                <strong>Rs 4,297</strong>
+              </div>
+              <button class="primary-btn" type="button">Review</button>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section">
+          <div class="section-title">
+            <div>
+              <h2>Popular rentals</h2>
+              <p>Furniture and appliances with deposit, tenure, and availability visible upfront.</p>
+            </div>
+            <div class="chips" aria-label="Category filters">
+              <button class="chip active" type="button">All</button>
+              <button class="chip" type="button">Furniture</button>
+              <button class="chip" type="button">Appliances</button>
+              <button class="chip" type="button">Work setup</button>
+            </div>
+          </div>
+
+          <div class="products">
+            <article class="panel product-card">
+              <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80" alt="Bed rental" />
+              <div class="product-body">
+                <h3>Queen Bed Set</h3>
+                <p>Bed frame, mattress, side table, and installation.</p>
+                <div class="price-line"><strong>Rs 1,899/mo</strong><span class="deposit">Rs 3,000 deposit</span></div>
+                <div class="tenure"><span>3 mo</span><span>6 mo</span><span>12 mo</span></div>
+              </div>
+            </article>
+            <article class="panel product-card">
+              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500&q=80" alt="Sofa rental" />
+              <div class="product-body">
+                <h3>3-Seater Sofa</h3>
+                <p>Living room-ready sofa with care cover option.</p>
+                <div class="price-line"><strong>Rs 1,499/mo</strong><span class="deposit">Rs 2,500 deposit</span></div>
+                <div class="tenure"><span>3 mo</span><span>6 mo</span><span>12 mo</span></div>
+              </div>
+            </article>
+            <article class="panel product-card">
+              <img src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=500&q=80" alt="Fridge rental" />
+              <div class="product-body">
+                <h3>Double Door Fridge</h3>
+                <p>Energy efficient appliance with maintenance included.</p>
+                <div class="price-line"><strong>Rs 1,299/mo</strong><span class="deposit">Rs 2,000 deposit</span></div>
+                <div class="tenure"><span>6 mo</span><span>12 mo</span><span>18 mo</span></div>
+              </div>
+            </article>
+            <article class="panel product-card">
+              <img src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=500&q=80" alt="Desk rental" />
+              <div class="product-body">
+                <h3>Work Desk Kit</h3>
+                <p>Desk, ergonomic chair, lamp, and cable tray.</p>
+                <div class="price-line"><strong>Rs 1,099/mo</strong><span class="deposit">Rs 1,800 deposit</span></div>
+                <div class="tenure"><span>3 mo</span><span>6 mo</span><span>12 mo</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section lower-grid">
+          <div class="panel rental-list">
+            <div class="panel-head">
+              <h2>My active rentals</h2>
+              <span class="pill">Customer view</span>
+            </div>
+            <div class="rental-row">
+              <div>
+                <h3>1BHK Starter Bundle</h3>
+                <p>Next bill: Rs 6,490 on 1 Jul</p>
+              </div>
+              <span class="status">Active</span>
+            </div>
+            <div class="rental-row">
+              <div>
+                <h3>Maintenance request</h3>
+                <p>Technician visit scheduled tomorrow</p>
+              </div>
+              <span class="status">Open</span>
+            </div>
+            <div class="rental-row">
+              <div>
+                <h3>Return pickup</h3>
+                <p>Choose date before 28 Jun</p>
+              </div>
+              <span class="status">Due</span>
+            </div>
+          </div>
+
+          <div class="panel admin-grid" aria-label="Admin dashboard preview">
+            <div class="metric">
+              <strong>128</strong>
+              <p>Active rentals</p>
+            </div>
+            <div class="metric warm">
+              <strong>Rs 8.4L</strong>
+              <p>Monthly recurring revenue</p>
+            </div>
+            <div class="metric">
+              <strong>87%</strong>
+              <p>Product utilization</p>
+            </div>
+            <div class="metric">
+              <strong>14</strong>
+              <p>Maintenance tickets</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

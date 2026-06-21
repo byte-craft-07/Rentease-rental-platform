@@ -1,0 +1,35 @@
+{
+  "name": "rentease-rental-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RentEase furniture and appliance rental platform with customer, rental, maintenance, admin, and vendor workflows.",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "node tools/dev.js",
+    "dev:client": "vite --config client/vite.config.js",
+    "dev:server": "node --watch server/src/index.js",
+    "build": "npm run build:client",
+    "build:client": "vite build --config client/vite.config.js",
+    "start": "node server/src/index.js",
+    "preview:theme": "node tools/preview-server.js",
+    "seed": "node tools/seed-db.js",
+    "smoke": "node tools/smoke-test.js",
+    "smoke:admin": "node tools/admin-smoke-test.js",
+    "validate": "node tools/validate.js",
+    "lint": "node tools/validate.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
